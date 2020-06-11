@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+
+    <!-- # gazebo -->
+    <include file="$(find my_robot)/launch/gazebo.launch">
+        <arg name="tf_odom_enabled" value="false" />
+    </include>
+
+    <!-- # ros_teleop -->
+    <include file="$(find ros_teleop)/launch/joy.launch" />
+
+    <!-- # gps record -->
+    <include file="$(find ros_gps_nav)/launch/gps_record.launch" />
+
+    <!-- # launch_switch -->
+    <include file="$(find ros_switch_launch)/launch/switch.launch">
+        <arg name="path_file" value="$(find my_switch)/launch/_gpsnav.launch" />
+        <!-- <param name="path_file" value="$(find my_switch)/launch/_slam.launch" /> -->
+    </include>
+
+    <!-- # rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find my_navigation)/rviz/nav.rviz" />
+
+</launch>

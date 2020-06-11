@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- # SLAM with navsat gps localization
+The jumping behavior of gps will effect the closed-loop of gmapping.
+It isn't recommended to use this two function at the same time.
+-->
+
+<!-- # tf
+map utm
+    ekf gps
+odom
+    ekf imu + odom
+base_link
+-->
+
+<launch>
+
+    <!-- # gazebo -->
+    <include file="$(find my_robot)/launch/gazebo.launch">
+        <arg name="tf_odom_enabled" value="false" />
+    </include>
+
+    <!-- # move_base -->
+    <include file="$(find my_move_base)/launch/move_base.launch">
+        <arg name="use_map" value="false" />
+    </include>
+
+    <!-- # gmapping -->
+    <include file="$(find ros_my_mapping)/launch/gmapping.launch">
+        <arg name="transform_publish_period" value="0" />
+    </include>
+
+    <!-- # robot localization -->
+    <include file="$(find my_localization)/launch/ekf_odom.launch" />
+    <include file="$(find my_localization)/launch/ekf_gps.launch" />
+    <include file="$(find my_localization)/launch/navsat.launch" />
+
+    <!-- # rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find my_navigation)/rviz/nav.rviz" />
+
+</launch>

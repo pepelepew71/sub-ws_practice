@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Include -->
+    <xacro:include filename="$(find my_robot)/urdf/body/material.urdf" />
+    <xacro:include filename="$(find my_robot)/urdf/body/property.urdf.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/body/inertia.urdf.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/body/wheel.urdf.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/body/caster.urdf.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/body/inertia.urdf.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/body/plate.urdf.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/body/arm.urdf.xacro" />
+
+    <!-- robo_body -->
+    <xacro:macro name="body" params="tf_odom_enabled">
+
+        <!-- BASE-LINK -->
+        <link name="base_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <cylinder length="${base_link_length}" radius="${base_link_radius}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <cylinder length="${base_link_length}" radius="${base_link_radius}"/>
+                </geometry>
+            </collision>
+            <!-- warning: KDL does not support a root link with an inertia. -->
+            <!-- <xacro:cylinder_inertial_matrix m="${base_mass}" r="${base_link_radius}" h="${base_link_length}" /> -->
+        </link>
+
+        <gazebo reference="base_link">
+            <material>Gazebo/Blue</material>
+        </gazebo>
+
+        <!-- Wheel Definitions -->
+        <xacro:wheel lr="right" translateY="1" parent="base_link"/>
+        <xacro:wheel lr="left" translateY="-1" parent="base_link"/>
+
+        <!-- Casters Definitions -->
+        <xacro:caster fb="front"  translateX="-1" parent="base_link"/>
+
+        <!-- plate Definitions -->
+        <xacro:plate num="1" parent="base_link" />
+        <xacro:plate num="2" parent="plate_1_link" />
+
+        <!-- Arm Definitions -->
+        <xacro:arm parent="base_link"/>
+
+        <!-- controller -->
+        <gazebo>
+            <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+                <legacyModeNS>true</legacyModeNS>
+            </plugin>
+        </gazebo>
+
+        <gazebo>
+            <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+                <rosDebugLevel>Debug</rosDebugLevel>
+                <publishWheelTF>true</publishWheelTF>
+                <robotNamespace>/</robotNamespace>
+                <publishOdomTF>${tf_odom_enabled}</publishOdomTF>
+                <publishTf>1</publishTf>
+                <publishWheelJointState>true</publishWheelJointState>
+                <broadcastTF>1</broadcastTF>
+                <alwaysOn>true</alwaysOn>
+                <updateRate>100.0</updateRate>
+                <legacyMode>true</legacyMode>
+                <leftJoint>wheel_left_joint</leftJoint>
+                <rightJoint>wheel_right_joint</rightJoint>
+                <wheelSeparation>${base_link_radius*2}</wheelSeparation>
+                <wheelDiameter>${2*wheel_radius}</wheelDiameter>
+                <wheelTorque>30</wheelTorque>
+                <wheelAcceleration>1.8</wheelAcceleration>
+                <commandTopic>cmd_vel</commandTopic>
+                <odometryFrame>odom</odometryFrame>
+                <odometryTopic>odom</odometryTopic>
+                <robotBaseFrame>base_link</robotBaseFrame>
+            </plugin>
+        </gazebo>
+
+    </xacro:macro>
+</robot>

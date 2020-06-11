@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+
+    <!-- my_navigation slam gps nav -->
+    <include file="$(find ros_gps_nav)/launch/main_2.launch" /> <!-- # GPS navigation without map -->
+
+    <!-- # fsm -->
+    <include file="$(find my_fsm)/launch/fsm.launch" />
+    <node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer" output="screen" />
+
+</launch>

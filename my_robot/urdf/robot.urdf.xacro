@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:arg name="lidar_enabled" default="true" />
+    <xacro:arg name="gps_enabled" default="true" />
+    <xacro:arg name="imu_enabled" default="true" />
+    <xacro:arg name="tf_odom_enabled" default="true" />
+
+    <!-- Include -->
+    <xacro:include filename="$(find my_robot)/urdf/body/body.urdf.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/accessories/rplidar.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/accessories/gps.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/accessories/imu.xacro" />
+
+    <!-- Body of robot, with plates, standoffs and Create -->
+    <xacro:body tf_odom_enabled="$(arg tf_odom_enabled)"/>
+
+    <!-- Attach the Rplidar -->
+    <xacro:if value="$(arg lidar_enabled)">
+        <joint name="rplidar_joint" type="fixed">
+            <origin xyz="0 0 0.025" rpy="0 0 0" />
+            <parent link="plate_2_link"/>
+            <child link="laser_link"/>
+        </joint>
+
+        <xacro:rplidar prefix="laser"/>
+    </xacro:if>
+
+    <!-- Attach the GPS -->
+    <xacro:if value="$(arg gps_enabled)">
+        <joint name="gps_joint" type="fixed">
+            <origin xyz="0 0 0.02" rpy="0 0 0" />
+            <parent link="plate_1_link"/>
+            <child link="gps_link"/>
+        </joint>
+
+        <xacro:gps />
+    </xacro:if>
+
+    <!-- Attach the IMU -->
+    <xacro:if value="$(arg imu_enabled)">
+        <joint name="imu_joint" type="fixed">
+            <origin xyz="0 0 0.02" rpy="0 0 0" />
+            <parent link="base_link"/>
+            <child link="imu_link"/>
+        </joint>
+
+        <xacro:imu />
+    </xacro:if>
+
+</robot>

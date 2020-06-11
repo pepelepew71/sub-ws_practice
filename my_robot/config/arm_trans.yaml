@@ -1,0 +1,13 @@
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+joint1_position_controller:
+  joint: arm_joint1
+  type: effort_controllers/JointPositionController
+  pid: {p: 0.5, i: 0.1, d: 0.0}
+
+joint2_position_controller:
+  joint: arm_joint2
+  type: effort_controllers/JointPositionController
+  pid: {p: 0.5, i: 0.1, d: 0.0}

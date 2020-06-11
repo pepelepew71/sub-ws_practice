@@ -1,0 +1,24 @@
+[submodule "ros_my_move_base"]
+	path = ros_my_move_base
+	url = git@github.com:pepelepew71/ros_my_move_base.git
+	branch = master
+[submodule "ros_gps_nav"]
+	path = ros_gps_nav
+	url = git@github.com:pepelepew71/ros_gps_nav.git
+	branch = master
+[submodule "ros_switch_launch"]
+	path = ros_switch_launch
+	url = git@github.com:pepelepew71/ros_switch_launch.git
+	branch = master
+[submodule "ros_my_mapping"]
+	path = ros_my_mapping
+	url = git@github.com:pepelepew71/ros_my_mapping.git
+	branch = master
+[submodule "ros_my_localization"]
+	path = ros_my_localization
+	url = git@github.com:pepelepew71/ros_my_localization.git
+	branch = master
+[submodule "ros_teleop"]
+	path = ros_teleop
+	url = git@github.com:pepelepew71/ros_teleop.git
+	branch = master

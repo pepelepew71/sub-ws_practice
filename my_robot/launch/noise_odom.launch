@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+
+    <!-- # gazebo -->
+    <include file="$(find my_robot)/launch/gazebo.launch">
+        <arg name="tf_odom_enabled" value="false"  />
+    </include>
+
+    <!-- # gazebo odom noise -->
+    <node pkg="my_robot" name="noise_odom_pub" type="noise_odom_pub.py" output="screen">
+        <!-- <parame name="a1" value=""> -->
+        <!-- <parame name="a2" value=""> -->
+        <!-- <parame name="a3" value=""> -->
+        <!-- <parame name="a4" value=""> -->
+        <param name="old_odom_topic" value="/odom" />
+        <param name="new_odom_topic" value="/noise_odom" />
+        <param name="base_frame" value="base_link" />
+        <!-- <param name="tf_odom_enabled" value="false" /> -->
+    </node>
+
+    <!-- # rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find my_robot)/rviz/empty.rviz" />
+
+</launch>
