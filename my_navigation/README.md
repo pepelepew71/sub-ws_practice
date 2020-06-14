@@ -1,6 +1,6 @@
 # my_navigation
 
-Navigation with different map localization method.
+Navigation under different map localization methods.
 
 ## Localization
 
