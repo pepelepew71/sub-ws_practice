@@ -5,6 +5,7 @@
     <xacro:arg name="lidar_enabled" default="true" />
     <xacro:arg name="gps_enabled" default="true" />
     <xacro:arg name="imu_enabled" default="true" />
+    <xacro:arg name="camera_enabled" default="true" />
     <xacro:arg name="tf_odom_enabled" default="true" />
 
     <!-- Include -->
@@ -12,6 +13,7 @@
     <xacro:include filename="$(find my_robot)/urdf/accessories/rplidar.xacro" />
     <xacro:include filename="$(find my_robot)/urdf/accessories/gps.xacro" />
     <xacro:include filename="$(find my_robot)/urdf/accessories/imu.xacro" />
+    <xacro:include filename="$(find my_robot)/urdf/accessories/usb_camera.xacro" />
 
     <!-- Body of robot, with plates, standoffs and Create -->
     <xacro:body tf_odom_enabled="$(arg tf_odom_enabled)"/>
@@ -24,7 +26,7 @@
             <child link="laser_link"/>
         </joint>
 
-        <xacro:rplidar prefix="laser"/>
+        <xacro:rplidar />
     </xacro:if>
 
     <!-- Attach the GPS -->
@@ -47,6 +49,17 @@
         </joint>
 
         <xacro:imu />
+    </xacro:if>
+
+    <!-- Attach the Camera -->
+    <xacro:if value="$(arg camera_enabled)">
+        <joint name="camera_joint" type="fixed">
+            <origin xyz="0.15 0 0.1" rpy="0 0 0" />
+            <parent link="base_link"/>
+            <child link="camera_link"/>
+        </joint>
+
+        <xacro:usb_camera />
     </xacro:if>
 
 </robot>
