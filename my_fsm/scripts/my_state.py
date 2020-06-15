@@ -8,9 +8,10 @@ import smach
 
 class PlanState(smach.State):
 
-    def __init__(self, path_file):
+    def __init__(self, param_name_nav_setup):
         super(PlanState, self).__init__(outcomes=('go', 'done'), output_keys=["target"])
-        self._waypoints = parse_file(path_file=path_file)
+        csv_txt = rospy.get_param(param_name=param_name_nav_setup)  # make sure /nav_setup has value
+        self._waypoints = parse_csv(csv_txt=csv_txt)
         self._count = 0
 
     def execute(self, userdata):
@@ -65,16 +66,15 @@ class BehaviorState(smach.State):
         return 'done'
 
 
-def parse_file(path_file):
-
-    with open(name=path_file, mode="r") as fileIO:
-        data_raw = fileIO.readlines()
+def parse_csv(csv_txt):
 
     data_nav = list()
+    lines = csv_txt.split("\n")
 
-    for line in data_raw:
-        navs = tuple(float(i) for i in line.split())  # latitude, longtitude, num
-        data_nav.append(navs)
+    for line in lines:
+        if line and not line.isspace():
+            navs = tuple(float(i) for i in line.split(","))  # latitude, longtitude, num
+            data_nav.append(navs)
 
     waypoints = list()
     waypoints.append(data_nav[0])
@@ -95,8 +95,19 @@ def parse_file(path_file):
 
 if __name__ == "__main__":
 
-    path_file = "/home/ych/ws/src/ros_practice/my_fsm/files/nav.txt"
-    waypoints = parse_file(path_file=path_file)
+    csv_txt = """
+    25.0135830014,121.547412085,1
+    25.0135643779,121.547356729,2
+    25.0135850055,121.547267552,2
+    25.0135107002,121.547275854,2
+    25.0134463139,121.547274833,2
+    25.0134452747,121.547341385,2
+    25.0134443431,121.547411426,2
+    25.0135088570,121.547412937,2
+    25.0135093206,121.547344050,1
+    """
+
+    waypoints = parse_csv(csv_txt=csv_txt)
 
     for p in waypoints:
         print(p)

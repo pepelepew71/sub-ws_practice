@@ -2,15 +2,19 @@
 
 <launch>
 
-    <arg name="path_file" value="$(find my_fsm)/files/nav_cloister.txt" />
-    <!-- <arg name="path_file" value="$(find my_fsm)/files/nav_playpen.txt" /> -->
+    <!-- # args -->
+    <arg name="param_nav_setup" default="/nav_setup" />
 
-    <!-- initialize servo1 -->
-    <node pkg="rostopic" type="rostopic" name="init_servo" args="pub --once /servo1/angle std_msgs/Int16 0" />
+    <!-- initialize servo -->
+    <node pkg="rostopic" type="rostopic" name="init_servo1" args="pub --once /servo1/angle std_msgs/Int16 0" />
+    <node pkg="rostopic" type="rostopic" name="init_servo2" args="pub --once /servo2/angle std_msgs/Int16 0" />
+
+    <!-- # launch gps_record for setting /nav_setup -->
+    <include file="$(find ros_gps_nav)/launch/gps_record.launch" />
 
     <!-- # fsm -->
     <node pkg="my_fsm" type="fsm.py" name="fsm" output="screen">
-        <param name="path_file" value="$(arg path_file)" />
+        <param name="param_nav_setup" value="$(arg param_nav_setup)" />
         <param name="service_goal" value="/gps_nav/goal" />
         <param name="service_pickup" value="/arm_servo/pickup" />
         <param name="service_putdown" value="/arm_servo/putdown" />

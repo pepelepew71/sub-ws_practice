@@ -20,7 +20,7 @@ if __name__ == "__main__":
     rospy.init_node(name='fsm', anonymous=False)
 
     # -- Get parameter
-    path_file = rospy.get_param(param_name="~path_file")
+    param_name_nav_setup = rospy.get_param(param_name="~param_nav_setup")
     service_name_goal = rospy.get_param(param_name="~service_goal")
     service_name_pickup = rospy.get_param(param_name="~service_pickup")
     service_name_putdown = rospy.get_param(param_name="~service_putdown")
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     with SM:
         smach.StateMachine.add(
             label='PlanState',
-            state=PlanState(path_file=path_file),
+            state=PlanState(param_name_nav_setup=param_name_nav_setup),
             transitions={'go': 'NavState', 'done': 'completed'})
         smach.StateMachine.add(
             label='NavState',
