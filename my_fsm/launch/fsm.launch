@@ -9,9 +9,6 @@
     <node pkg="rostopic" type="rostopic" name="init_servo1" args="pub --once /servo1/angle std_msgs/Int16 0" />
     <node pkg="rostopic" type="rostopic" name="init_servo2" args="pub --once /servo2/angle std_msgs/Int16 0" />
 
-    <!-- # launch gps_record for setting /nav_setup -->
-    <include file="$(find ros_gps_nav)/launch/gps_record.launch" />
-
     <!-- # fsm -->
     <node pkg="my_fsm" type="fsm.py" name="fsm" output="screen">
         <param name="param_nav_setup" value="$(arg param_nav_setup)" />

@@ -10,8 +10,8 @@
     <!-- # ros_teleop -->
     <include file="$(find ros_teleop)/launch/joy.launch" />
 
-    <!-- # gps record -->
-    <include file="$(find ros_gps_nav)/launch/gps_record.launch" />
+    <!-- # gps rec -->
+    <include file="$(find ros_gps_nav)/launch/gps_rec.launch" />
 
     <!-- # launch_switch -->
     <include file="$(find ros_switch_launch)/launch/switch.launch">
