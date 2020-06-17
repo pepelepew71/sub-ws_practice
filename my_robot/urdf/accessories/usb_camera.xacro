@@ -47,6 +47,7 @@
                     <updateRate>0.0</updateRate>
                     <imageTopicName>image_raw</imageTopicName>
                     <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                    <cameraName>camera</cameraName>
                     <frameName>camera_link</frameName>
                     <hackBaseline>0.07</hackBaseline>
                     <distortionK1>0.0</distortionK1>
