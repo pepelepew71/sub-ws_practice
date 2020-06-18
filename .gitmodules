@@ -18,7 +18,3 @@
 	path = ros_my_localization
 	url = git@github.com:pepelepew71/ros_my_localization.git
 	branch = master
-[submodule "ros_teleop"]
-	path = ros_teleop
-	url = git@github.com:pepelepew71/ros_teleop.git
-	branch = master

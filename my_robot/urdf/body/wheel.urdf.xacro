@@ -26,6 +26,11 @@
             <material>Gazebo/Black</material>
             <mu1>5.0</mu1>
             <mu2>5.0</mu2>
+            <kp>10000.0</kp>
+            <kd>10.0</kd>
+            <minDepth>0.0</minDepth>
+            <maxVel>5</maxVel>
+            <fdir1>0 0 0</fdir1>
         </gazebo>
 
         <joint name="wheel_${lr}_joint" type="continuous">
