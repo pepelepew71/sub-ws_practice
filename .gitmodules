@@ -18,3 +18,6 @@
 	path = ros_my_localization
 	url = git@github.com:pepelepew71/ros_my_localization.git
 	branch = master
+[submodule "ros_my_robot_gazebo"]
+	path = ros_my_robot_gazebo
+	url = git@github.com:pepelepew71/ros_my_robot_gazebo.git

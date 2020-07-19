@@ -1,6 +1,0 @@
-servo1_topic: servo1/angle
-servo1_lb: -90
-servo1_ub: 0
-servo2_topic: servo2/angle
-servo2_lb: -90
-servo2_ub: 0
