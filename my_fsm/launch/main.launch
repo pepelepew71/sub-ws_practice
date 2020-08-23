@@ -3,7 +3,7 @@
 <launch>
 
     <!-- # robot navigation -->
-    <include file="$(find my_navigation)/launch/main_1.launch" /> <!-- # GPS navigation without map -->
+    <include file="$(find my_navigation)/launch/main_1.launch" /> <!-- # GPS navigation with amcl and gazebo odom -->
 
     <!-- <?ignore -->
     <!-- # fsm -->
