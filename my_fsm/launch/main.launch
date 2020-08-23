@@ -2,14 +2,18 @@
 
 <launch>
 
-    <!-- my_navigation slam gps nav -->
-    <include file="$(find ros_gps_nav)/launch/main_2.launch" /> <!-- # GPS navigation without map -->
+    <!-- # robot navigation -->
+    <include file="$(find my_navigation)/launch/main_1.launch" /> <!-- # GPS navigation without map -->
 
-    <!-- # launch gps_rec for setting /nav_setup -->
-    <include file="$(find ros_gps_nav)/launch/gps_rec.launch" />
-
+    <!-- <?ignore -->
     <!-- # fsm -->
-    <include file="$(find my_fsm)/launch/fsm.launch" />
+    <node pkg="my_fsm" type="fsm.py" name="fsm" output="screen">
+        <param name="ns_action" value="/move_base" />
+        <param name="path_file" value="$(find my_fsm)/file/waypoints.csv" />
+        <param name="top_cmd_vel" value="/cmd_vel" />
+    </node>
+
     <node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer" output="screen" />
+    <!-- ?> -->
 
 </launch>

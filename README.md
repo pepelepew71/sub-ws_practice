@@ -2,12 +2,21 @@
 
 My ROS practice workspace.
 
-Some code and models are based on
+Some code or models are based on
 
 1. [https://github.com/huchunxu/ros_exploring](https://github.com/huchunxu/ros_exploring)
 2. [http://wiki.ros.org/husky_gazebo/Tutorials/Simulating%20Husky](http://wiki.ros.org/husky_gazebo/Tutorials/Simulating%20Husky)
 
-## Requirements
+## Clone
+
+```bash
+git clone https://github.com/pepelepew71/sub-ws_practice.git
+cd sub-ws_practice
+git submodule init
+git submodule update
+```
+
+## Dependency
 
 ```bash
 sudo apt install ros-kinetic-amcl
